@@ -5,16 +5,46 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
+import { RouterModule }   from '@angular/router';
+import { MaterialModule } from '@angular/material';
+import 'hammerjs';
+
+import {HomeComponent} from "./home.component";
+
+
+import { GridComponent } from './components/grid.component';
+import {LargeArrayService} from "./shared/LargeArray.service";
+import { ShowDataOnceComponent } from './components/showdataonce/showdataonce.component';
+import { ShowInfiniteScrollComponent } from './components/showinfinitescroll/showinfinitescroll.component';
+import { InfiniteScrollModule } from 'angular2-infinite-scroll';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+
+    GridComponent,
+    ShowDataOnceComponent,
+    ShowInfiniteScrollComponent
   ],
   imports: [
     BrowserModule,
+    MaterialModule.forRoot(),
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule,
+    InfiniteScrollModule,
+
+
+    RouterModule.forRoot([
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
+      { path: 'showdataonce', component: ShowDataOnceComponent},
+      { path: 'infinitscroll', component: ShowInfiniteScrollComponent},
+      { path: '**', redirectTo: 'home' }
+    ])
   ],
-  providers: [],
+  providers: [LargeArrayService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
