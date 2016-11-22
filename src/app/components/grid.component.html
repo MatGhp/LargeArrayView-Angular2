@@ -20,7 +20,7 @@
     <td colspan="4" class="text-center">No records found.</td>
   </tr>
 
-  <tr *ngFor="let row of datasource">
+  <tr *ngFor="let row of datasource"  [@gridAnimation]  >
 
     <td>{{row.id}}</td>
     <td>{{row.column1}}</td>
