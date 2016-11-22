@@ -49,7 +49,7 @@ export class ShowDataOnceComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.source = this._largeArrayService.getFakeDataInOnce();
+    this.source = this._largeArrayService.getFakeData();
   }
 
   ngOnDestroy() {

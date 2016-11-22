@@ -29,7 +29,7 @@ export class LargeArrayService {
   }
 
   // return mutable state
-  getFakeDataInOnce(): ISampleClass[] {
+  getFakeData(): ISampleClass[] {
     return this._state;
   }
 

@@ -33,7 +33,7 @@ export class ShowInfiniteScrollComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.sourceData = this._largeArrayService.getFakeDataInOnce();
+    this.sourceData = this._largeArrayService.getFakeData();
 
     const data = this.sourceData.slice(0, this.batchSize);
     this.appendData(data);
