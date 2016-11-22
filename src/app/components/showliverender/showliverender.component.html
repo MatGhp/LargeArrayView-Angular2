@@ -1,0 +1,14 @@
+<div class="row">
+  <hr>
+  <div>Source length : {{displayData.length}}</div>
+  <hr>
+  <div class="col-xs-12" >
+    <div>
+
+      <button md-raised-button color="primary" (click)="clickAdd$.next($event)">
+        Add New
+      </button>
+    </div>
+    <lva-grid [datasource]="displayData" (onDelete)="clickDelete$.next($event)"></lva-grid>
+  </div>
+</div>

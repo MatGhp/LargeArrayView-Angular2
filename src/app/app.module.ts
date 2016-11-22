@@ -17,6 +17,7 @@ import {LargeArrayService} from "./shared/LargeArray.service";
 import { ShowDataOnceComponent } from './components/showdataonce/showdataonce.component';
 import { ShowInfiniteScrollComponent } from './components/showinfinitescroll/showinfinitescroll.component';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
+import { ShowLiveRenderComponent } from './components/showliverender/showliverender.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
     GridComponent,
     ShowDataOnceComponent,
-    ShowInfiniteScrollComponent
+    ShowInfiniteScrollComponent,
+    ShowLiveRenderComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +43,9 @@ import { InfiniteScrollModule } from 'angular2-infinite-scroll';
       { path: 'home', component: HomeComponent },
       { path: 'showdataonce', component: ShowDataOnceComponent},
       { path: 'infinitscroll', component: ShowInfiniteScrollComponent},
+      { path: 'liverender', component: ShowLiveRenderComponent},
+
+
       { path: '**', redirectTo: 'home' }
     ])
   ],
