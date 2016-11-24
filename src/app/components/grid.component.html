@@ -1,41 +1,54 @@
+<div>Source length : {{datasource.length}}</div>
+<hr>
+<div>Display Items length : {{displaySource.length}}</div>
+<div>
+  <button md-raised-button color="primary" (click)="onAddNewRecord()">
+    Add New
+  </button>
+</div>
+<div class="search-results"
+     infinite-scroll
+     [infiniteScrollDistance]="1"
+     [infiniteScrollThrottle]="10"
+     (scrolled)="onScrollDown()">
+  <table class="table table-condensed" *ngIf="displaySource">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Column1</th>
+      <th>Column2</th>
+      <th>Column3</th>
+      <th>Column4</th>
+      <th>Column5</th>
+      <th>Column6</th>
+      <th>Column7</th>
+      <th>Column8</th>
+      <th>Column9</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="displaySource?.length === 0">
+      <td colspan="4" class="text-center">No records found.</td>
+    </tr>
 
-<table class="table table-condensed" *ngIf="datasource.length > 0">
-  <thead>
-  <tr>
-    <th>id</th>
-    <th>Column1</th>
-    <th>Column2</th>
-    <th>Column3</th>
-    <th>Column4</th>
-    <th>Column5</th>
-    <th>Column6</th>
-    <th>Column7</th>
-    <th>Column8</th>
-    <th>Column9</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngIf="datasource.length === 0">
-    <td colspan="4" class="text-center">No records found.</td>
-  </tr>
+    <tr *ngFor="let row of displaySource" [@gridAnimation]>
 
-  <tr *ngFor="let row of datasource"  [@gridAnimation]  >
+      <td>{{row.id}}</td>
+      <td>{{row.column1}}</td>
+      <td>{{row.column2}}</td>
+      <td>{{row.column3}}</td>
+      <td>{{row.column4}}</td>
+      <td>{{row.column5}}</td>
+      <td>{{row.column6}}</td>
+      <td>{{row.column7}}</td>
+      <td>{{row.column8}}</td>
+      <td>{{row.column9}}</td>
+      <td>
+        <button md-raised-button color="warn" (click)="onDelete(row.id)">Delete</button>
+      </td>
+    </tr>
 
-    <td>{{row.id}}</td>
-    <td>{{row.column1}}</td>
-    <td>{{row.column2}}</td>
-    <td>{{row.column3}}</td>
-    <td>{{row.column4}}</td>
-    <td>{{row.column5}}</td>
-    <td>{{row.column6}}</td>
-    <td>{{row.column7}}</td>
-    <td>{{row.column8}}</td>
-    <td>{{row.column9}}</td>
-    <td>
-      <button  md-raised-button color="warn" (click)="onDelete.emit(row.id)">Delete</button>
-    </td>
-  </tr>
-
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
