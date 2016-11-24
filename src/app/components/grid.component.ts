@@ -45,7 +45,7 @@ export class GridComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: { [propName: string]: SimpleChange }) {
-    //--in case we update datasource on parrent side
+    //--in case the datasource is updated on the parrent side
     if(change['datasource'].currentValue !== change['datasource'].previousValue && this.scrollingStrategy===false)
     {
       this.datasource = change['datasource'].currentValue;
@@ -58,9 +58,9 @@ export class GridComponent implements OnInit, OnChanges {
     if (this.scrollingStrategy) {
       this.onScrollDown();
     }
-    else {
-      this.loadData(this.datasource.length);
-    }
+    // else {
+    //   this.loadData(this.datasource.length);
+    // }
   }
 
   get deleteObservable$() {
