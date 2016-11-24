@@ -1,27 +1,30 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import {ISampleClass} from "../../shared/models";
 import {Subject, Subscription} from "rxjs";
 import {LargeArrayService} from "../../shared/LargeArray.service";
+import {GridComponent} from "../grid.component";
 
 @Component({
   selector: 'lva-showliverender',
   templateUrl: './showliverender.component.html'
 })
-export class ShowLiveRenderComponent implements OnInit, OnDestroy {
+export class ShowLiveRenderComponent implements OnInit, OnDestroy,AfterViewInit {
 
   private updateSubscription: Subscription;
 
-  clickDelete$ = new Subject();
-  clickAdd$ = new Subject();
   chunkData$ = new Subject();
 
+  sourceData = [];
+  displayData = [];
   private deleteSubscription: Subscription;
   private addSubscription: Subscription;
 
-  private sourceData: ISampleClass[] = [];
-  private displayData: ISampleClass[] = [];
+  @ViewChild('datagrid')
+  private _grid: GridComponent;
 
-  constructor(private _largeArrayService: LargeArrayService) {
+  constructor(private _largeArrayService: LargeArrayService) {}
+
+  ngOnInit() {
     this.sourceData = this._largeArrayService.getFakeData();
 
     this.updateSubscription = this.chunkData$
@@ -31,40 +34,27 @@ export class ShowLiveRenderComponent implements OnInit, OnDestroy {
       });
 
     this.startSlicingData(500);
+  }
 
-    this.deleteSubscription = this.clickDelete$
+  ngAfterViewInit() {
+
+    this.deleteSubscription = this._grid.deleteObservable$
       .subscribe((id: number) => {
-        let rowToDelete = this.sourceData.filter(row => row.id === id)[0];
-        let index = this.sourceData.indexOf(rowToDelete);
-        this.sourceData.splice(index, 1);
-        this.displayData.splice(index, 1);
+        //delete store
+        this._largeArrayService.deleteFakeData(id);
+        //delete diplay row
+        // let rowToDelete = this.displayData.filter(row => row.id === id)[0];
+        // let index = this.sourceData.indexOf(rowToDelete);
+        // this.displayData.splice(index, 1);
       });
 
-    this.addSubscription = this.clickAdd$.subscribe(() => this.onAddNewRecord());
+    this.addSubscription = this._grid.addNewObservable$
+      .subscribe((newSample: ISampleClass) => {
+        this._largeArrayService.addFakeData(newSample);
+        //this.displayData.push(newSample);
+      });
   }
 
-
-  onAddNewRecord() {
-    let newId = this._largeArrayService.getLastId() + 1;
-    let newRow = <ISampleClass>{
-      id: newId,
-      column1: `row${newId}column1`,
-      column2: `row${newId}column2`,
-      column3: `row${newId}column3`,
-      column4: `row${newId}column4`,
-      column5: `row${newId}column5`,
-      column6: `row${newId}column6`,
-      column7: `row${newId}column7`,
-      column8: `row${newId}column8`,
-      column9: `row${newId}column9`
-    };
-    this._largeArrayService.addFakeData(newRow);
-    this.displayData.push(newRow);
-  }
-
-  ngOnInit() {
-
-  }
 
   ngOnDestroy() {
     this.deleteSubscription.unsubscribe();
@@ -92,5 +82,6 @@ export class ShowLiveRenderComponent implements OnInit, OnDestroy {
 
   private appendData(data: ISampleClass[]) {
     this.displayData.splice(this.displayData.length, 0, ...data);
+    this.displayData = this.displayData.slice();
   }
 }

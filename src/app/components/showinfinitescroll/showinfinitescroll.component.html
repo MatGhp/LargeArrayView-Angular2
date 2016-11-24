@@ -1,22 +1,7 @@
-<div class="row">
-  <hr>
-  <div>Source length : {{sourceData.length}}</div>
-  <hr>
-  <div>Display Items length : {{displayData.length}}</div>
+
+<div *ngIf="sourceData" class="row">
   <hr>
   <div class="col-xs-12">
-    <div>
-
-      <button md-raised-button color="primary" (click)="clickAdd$.next($event)">
-        Add New
-      </button>
-    </div>
-    <div class="search-results"
-         infinite-scroll
-         [infiniteScrollDistance]="1"
-         [infiniteScrollThrottle]="10"
-         (scrolled)="onScrollDown()">
-      <lva-grid [datasource]="displayData" (onDelete)="clickDelete$.next($event)"></lva-grid>
-    </div>
+    <large-grid #datagrid [datasource]="sourceData" [scrollingStrategy]="true" [displayRowNumber]="displayRowNumber"></large-grid>
   </div>
 </div>

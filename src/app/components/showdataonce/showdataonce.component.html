@@ -1,15 +1,6 @@
-
-<div class="row">
+<div *ngIf="sourceData" class="row">
   <hr>
-  <div>Source length : {{source.length}}</div>
-  <hr>
-  <div class="col-xs-12" >
-    <div>
-
-      <button md-raised-button color="primary" (click)="clickAdd$.next($event)">
-        Add New
-      </button>
-    </div>
-    <lva-grid [datasource]="source" (onDelete)="clickDelete$.next($event)"></lva-grid>
+  <div class="col-xs-12">
+    <large-grid #datagrid [datasource]="sourceData" [scrollingStrategy]="false"></large-grid>
   </div>
 </div>
