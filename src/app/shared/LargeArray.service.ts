@@ -33,15 +33,22 @@ export class LargeArrayService {
     return this._state;
   }
 
-  addFakeData(sampleData: ISampleClass)
-  {
+  addFakeData(sampleData: ISampleClass) {
     this._state.push(sampleData)
   }
 
-  getLastId() : number
-  {
+  getLastId(): number {
     return Math.max(...this._state.map(records => records.id));
   }
 
+  getFakeDataById(id: number): ISampleClass {
+    return this._state.filter(row => row.id === id)[0];
+  }
+
+  deleteFakeData(id: number): void {
+    let rowToDelete = this.getFakeDataById(id);
+    let index = this._state.indexOf(rowToDelete);
+    this._state.splice(index, 1);
+  }
 
 }
